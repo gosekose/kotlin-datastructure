@@ -7,22 +7,22 @@ class IntStack(
     private var point = 0
 
     init {
-        if (capacity <= 0) throw InvalidIntStackException(IntStackErrorException.INVALID_CAPACIRT)
+        if (capacity <= 0) throw InvalidIntStackException(IntStackExceptionCode.INVALID_CAPACIRT)
     }
 
     fun push(x: Int): Int {
-        if (point >= capacity) throw OverflowIntStackException(IntStackErrorException.OVERFLOW)
+        if (point >= capacity) throw OverflowIntStackException(IntStackExceptionCode.OVERFLOW)
         stack[point++] = x
         return x
     }
 
     fun pop(): Int {
-        if (point <= 0) throw EmptyIntStackException(IntStackErrorException.EMPTY)
+        if (point <= 0) throw EmptyIntStackException(IntStackExceptionCode.EMPTY)
         return stack[--point]
     }
 
     fun peek(): Int {
-        if (point <= 0) throw EmptyIntStackException(IntStackErrorException.EMPTY)
+        if (point <= 0) throw EmptyIntStackException(IntStackExceptionCode.EMPTY)
         return stack[point - 1]
     }
 
@@ -45,7 +45,7 @@ class IntStack(
 
     fun printFromBottomToTop() {
         when {
-            isEmpty -> println(IntStackErrorException.EMPTY.message)
+            isEmpty -> println(IntStackExceptionCode.EMPTY.message)
             else -> stack.forEachIndexed { index, value ->
                 if (index < point) {
                     println(value)
@@ -54,12 +54,12 @@ class IntStack(
         }
     }
 
-    class InvalidIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
-    class OverflowIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
-    class EmptyIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
+    class InvalidIntStackException(code: IntStackExceptionCode) : RuntimeException(code.message)
+    class OverflowIntStackException(code: IntStackExceptionCode) : RuntimeException(code.message)
+    class EmptyIntStackException(code: IntStackExceptionCode) : RuntimeException(code.message)
 }
 
-enum class IntStackErrorException(
+enum class IntStackExceptionCode(
     val message: String,
 ) {
     INVALID_CAPACIRT("용량은 0이상입니다."), OVERFLOW("오버플로우가 발생했습니다."), EMPTY("스택이 비었습니다.");
