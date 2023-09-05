@@ -1,28 +1,28 @@
 package stack
 
-class IntStackWithStaticLength(
+class IntStack(
     private val capacity: Int
 ) {
     private val stack = IntArray(capacity)
     private var point = 0
 
     init {
-        if (capacity <= 0) throw InvalidIntStack(IntStackErrorException.INVALID_CAPACIRT)
+        if (capacity <= 0) throw InvalidIntStackException(IntStackErrorException.INVALID_CAPACIRT)
     }
 
     fun push(x: Int): Int {
-        if (point >= capacity) throw OverflowIntStack(IntStackErrorException.OVERFLOW)
+        if (point >= capacity) throw OverflowIntStackException(IntStackErrorException.OVERFLOW)
         stack[point++] = x
         return x
     }
 
     fun pop(): Int {
-        if (point <= 0) throw EmptyIntStack(IntStackErrorException.EMPTY)
+        if (point <= 0) throw EmptyIntStackException(IntStackErrorException.EMPTY)
         return stack[--point]
     }
 
     fun peek(): Int {
-        if (point <= 0) throw EmptyIntStack(IntStackErrorException.EMPTY)
+        if (point <= 0) throw EmptyIntStackException(IntStackErrorException.EMPTY)
         return stack[point - 1]
     }
 
@@ -54,9 +54,9 @@ class IntStackWithStaticLength(
         }
     }
 
-    class InvalidIntStack(exception: IntStackErrorException) : RuntimeException(exception.message)
-    class OverflowIntStack(exception: IntStackErrorException) : RuntimeException(exception.message)
-    class EmptyIntStack(exception: IntStackErrorException) : RuntimeException(exception.message)
+    class InvalidIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
+    class OverflowIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
+    class EmptyIntStackException(exception: IntStackErrorException) : RuntimeException(exception.message)
 }
 
 enum class IntStackErrorException(
@@ -66,7 +66,7 @@ enum class IntStackErrorException(
 }
 
 fun main() {
-    val stack = IntStackWithStaticLength(12)
+    val stack = IntStack(12)
 
     stack.push(100)
     stack.push(1)
